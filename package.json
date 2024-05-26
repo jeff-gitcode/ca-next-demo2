@@ -9,10 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.1",
+    "@hookform/resolvers": "^3.4.2",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "swr": "^2.2.5"
+    "react-hook-form": "^7.51.5",
+    "swr": "^2.2.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",

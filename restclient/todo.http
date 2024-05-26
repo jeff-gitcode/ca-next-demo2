@@ -1,0 +1,89 @@
+@host=http://127.0.0.1:8090
+
+
+### GET todo records
+GET {{host}}/api/collections/todo/records?page=1&perPage=10 HTTP/1.1
+content-type: application/json
+
+### GET todo record
+GET {{host}}/api/collections/todo/records/xucm9od3kwqq7zq HTTP/1.1
+content-type: application/json
+
+### CREATE todo record
+POST {{host}}/api/collections/todo/records HTTP/1.1
+accept: text/plain
+content-type: application/json
+
+{
+  "title": "Admin1",
+  "content": ""
+}
+
+### Update todo record
+PATCH {{host}}/api/collections/todo/records/xucm9od3kwqq7zq HTTP/1.1
+accept: text/plain
+content-type: application/json
+
+{
+  "title": "Admin updated",
+  "content": "content1"
+}
+
+### DELETE todo record
+DELETE  {{host}}/api/collections/todo/records/v7nzpoto63z4gj1 HTTP/1.1
+accept: text/plain
+content-type: application/json
+
+
+### GET todo records from nextjs
+GET http://127.0.0.1:3000/api/todos HTTP/1.1
+content-type: application/json
+
+### GET todo record
+GET http://127.0.0.1:3000/api/todos/xucm9od3kwqq7zq HTTP/1.1
+content-type: application/json
+
+### CREATE todo record
+POST http://127.0.0.1:3000/api/todos HTTP/1.1
+accept: text/plain
+content-type: application/json
+
+{
+    "title": "Admin"
+}
+
+### LoginUserFunction (User)
+POST {{host}}/api/LoginUserFunction HTTP/1.1
+accept: text/plain
+content-type: application/json
+
+{
+  "name": "Jeff",
+  "role": "User",
+  "email": "user@email.com",
+  "password": "password"
+}
+
+### LoginUserFunction (Admin)
+POST {{host}}/api/LoginUserFunction HTTP/1.1
+accept: text/plain
+content-type: application/json
+
+{
+  "name": "Admin",
+  "role": "Admin",
+  "email": "admin@email.com",
+  "password": "password"
+}
+
+### SearchUserFunction
+POST {{host}}/api/SearchUserFunction HTTP/1.1
+Authorization: Bearer {{token}}
+accept: text/plain
+content-type: application/json
+
+{
+  "name": "John",
+  "page": 1,
+  "size": 1
+}
