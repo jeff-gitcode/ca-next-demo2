@@ -30,7 +30,7 @@ content-type: application/json
 }
 
 ### DELETE todo record
-DELETE  {{host}}/api/collections/todo/records/v7nzpoto63z4gj1 HTTP/1.1
+DELETE  {{host}}/api/collections/todo/records/szfhv770n23b80j HTTP/1.1
 accept: text/plain
 content-type: application/json
 
@@ -51,6 +51,20 @@ content-type: application/json
 {
     "title": "Admin"
 }
+
+### UPDATE todo record
+PATCH http://127.0.0.1:3000/api/todos/xucm9od3kwqq7zq HTTP/1.1
+accept: text/plain
+content-type: application/json
+
+{
+    "title": "Admin UPDATED"
+}
+
+### DELETE todo record
+DELETE  http://127.0.0.1:3000/api/todos/3cyet2vmpwj7h2a HTTP/1.1
+accept: text/plain
+content-type: application/json
 
 ### LoginUserFunction (User)
 POST {{host}}/api/LoginUserFunction HTTP/1.1
