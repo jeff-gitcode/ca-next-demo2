@@ -7,6 +7,8 @@ import * as z from "zod";
 import { loginSchema } from "./login";
 import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
+import { useCreateTodo } from "../useTodo";
+import { redirect } from "next/navigation";
 
 // Interface for our form values that drastically improves type safety for our form
 // export interface FormValues {
@@ -40,22 +42,31 @@ export default function Form() {
     //     console.log(isSubmitting);
     //     console.log(data);
     // };
-
+    const {
+        createData,
+        createTodo,
+        isCreating,
+    } = useCreateTodo();
 
     const {
         handleSubmit,
         register,
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
+        defaultValues: { id: "", title: "" },
         resolver: zodResolver(loginSchema),
     });
 
     // const { register, handleSubmit } = useForm<FormValues>();
 
+
     const actions: () => void = handleSubmit(async (data: FormData) => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         console.log(isSubmitting);
         console.log(data);
+        createTodo({ requestBody: data });
+
+        redirect('/todos');
     });
 
     return (

@@ -58,6 +58,7 @@ accept: text/plain
 content-type: application/json
 
 {
+    "id": "xucm9od3kwqq7zq",
     "title": "Admin UPDATED"
 }
 
@@ -65,39 +66,3 @@ content-type: application/json
 DELETE  http://127.0.0.1:3000/api/todos/3cyet2vmpwj7h2a HTTP/1.1
 accept: text/plain
 content-type: application/json
-
-### LoginUserFunction (User)
-POST {{host}}/api/LoginUserFunction HTTP/1.1
-accept: text/plain
-content-type: application/json
-
-{
-  "name": "Jeff",
-  "role": "User",
-  "email": "user@email.com",
-  "password": "password"
-}
-
-### LoginUserFunction (Admin)
-POST {{host}}/api/LoginUserFunction HTTP/1.1
-accept: text/plain
-content-type: application/json
-
-{
-  "name": "Admin",
-  "role": "Admin",
-  "email": "admin@email.com",
-  "password": "password"
-}
-
-### SearchUserFunction
-POST {{host}}/api/SearchUserFunction HTTP/1.1
-Authorization: Bearer {{token}}
-accept: text/plain
-content-type: application/json
-
-{
-  "name": "John",
-  "page": 1,
-  "size": 1
-}
