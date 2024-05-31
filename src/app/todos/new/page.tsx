@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { loginSchema } from "./login";
+import { todoSchema } from "./todo";
 import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useCreateTodo } from "../useTodo";
@@ -15,7 +15,7 @@ import { redirect } from "next/navigation";
 //     title: string;
 // }
 
-type FormData = z.infer<typeof loginSchema>;
+type FormData = z.infer<typeof todoSchema>;
 
 export interface InputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -54,7 +54,7 @@ export default function Form() {
         formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
         defaultValues: { id: "", title: "" },
-        resolver: zodResolver(loginSchema),
+        resolver: zodResolver(todoSchema),
     });
 
     // const { register, handleSubmit } = useForm<FormValues>();
