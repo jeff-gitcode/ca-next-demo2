@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 import { todoSchema } from "../../../application/todo";
-import { useTodo, useUpdateTodo } from "../../../application/useTodo";
+import { useTodo, useUpdateTodo } from "../../../application/hooks/useTodo";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

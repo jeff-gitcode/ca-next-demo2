@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { useDeleteTodo, useTodos } from '../../application/useTodo';
+import { useDeleteTodo, useTodos } from '../../application/hooks/useTodo';
 import { Todo } from '../../domain/todo';
 
 export default function TodoPage() {
