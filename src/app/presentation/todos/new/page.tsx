@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { todoSchema } from "../../../application/todo";
+import { todoSchema } from "../../../application/validator/todo";
 import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useCreateTodo } from "../../../application/hooks/useTodo";

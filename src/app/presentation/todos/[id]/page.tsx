@@ -1,7 +1,7 @@
 'use client';
 
 import * as z from "zod";
-import { todoSchema } from "../../../application/todo";
+import { todoSchema } from "../../../application/validator/todo";
 import { useTodo, useUpdateTodo } from "../../../application/hooks/useTodo";
 import React from "react";
 import { useForm } from "react-hook-form";
