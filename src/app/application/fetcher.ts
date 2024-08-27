@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-import { Todo } from "../todo";
+import { Todo } from "../domain/todo";
 
 interface PutRequestArgs {
     requestBody: Todo;

@@ -21,7 +21,7 @@ export default function RootLayout({
         <div>
           <header> </header>
           <nav>
-            <Link href="/todos">Todos</Link> |
+            <Link href="/presentation/todos">Todos</Link> |
             <Link href="/">About</Link>
           </nav>
         </div>

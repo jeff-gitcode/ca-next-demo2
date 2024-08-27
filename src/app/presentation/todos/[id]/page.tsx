@@ -1,8 +1,8 @@
 'use client';
 
 import * as z from "zod";
-import { todoSchema } from "../new/todo";
-import { useTodo, useUpdateTodo } from "../useTodo";
+import { todoSchema } from "../../../application/todo";
+import { useTodo, useUpdateTodo } from "../../../application/useTodo";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -56,7 +56,7 @@ export default function TodoPage({ params }: { params: { id: string } }) {
         console.log(data);
         updateTodo({ requestBody: data, queryParams: { id: id } });
 
-        redirect('/todos');
+        redirect('/presentation/todos');
     });
 
     return (

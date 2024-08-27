@@ -61,6 +61,12 @@ $ yarn add swr
 $ yarn add react-hook-form @hookform/resolvers zod
 $ yarn add @hookform/error-message
 $ yarn add dotenv
+$ yarn add @next/env
+
+# clear cache
+$ rm -rf .next
+$ rm -rf node_modules package-lock.json
+$ rm -rf node_modules yarn.lock
 ```
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

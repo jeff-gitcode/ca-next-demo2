@@ -4,10 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { todoSchema } from "./todo";
+import { todoSchema } from "../../../application/todo";
 import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
-import { useCreateTodo } from "../useTodo";
+import { useCreateTodo } from "../../../application/useTodo";
 import { redirect } from "next/navigation";
 
 // Interface for our form values that drastically improves type safety for our form
@@ -66,7 +66,7 @@ export default function Form() {
         console.log(data);
         createTodo({ requestBody: data });
 
-        redirect('/todos');
+        redirect('/presentation/todos');
     });
 
     return (
