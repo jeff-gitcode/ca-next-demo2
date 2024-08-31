@@ -41,13 +41,13 @@ Installing devDependencies:
 - tailwindcss
 - eslint
 - eslint-config-next
-- 
-- 
+-
+-
 
 $ cd ca-next-demo
 $ yarn
 
-# pocketbase 
+# pocketbase
 # download from https://github.com/pocketbase/pocketbase/releases/download/v0.22.12/pocketbase_0.22.12_windows_amd64.zip
 
 $ pocketbase.exe serve
@@ -62,6 +62,7 @@ $ yarn add react-hook-form @hookform/resolvers zod
 $ yarn add @hookform/error-message
 $ yarn add dotenv
 $ yarn add @next/env
+$ yarn add inversify reflect-metadata
 
 # clear cache
 $ rm -rf .next
