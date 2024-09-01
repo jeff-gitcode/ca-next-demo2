@@ -3,8 +3,8 @@ import { inject, injectable } from "inversify";
 import { CreateTodoDto } from "../dtos/todos/create-todo.input";
 import { Todo } from "../../domain/todo";
 import { ITodoUseCase } from "../abstract/todos/itodo.usecase";
-import { TYPES } from "../di";
 import { ITodoRepository } from "../abstract/todos/itodo.repository";
+import { TYPES } from "@/app/types";
 
 @injectable()
 export class TodoUseCase implements ITodoUseCase {

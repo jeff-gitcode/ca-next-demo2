@@ -1,11 +1,13 @@
-import { createTodo, getTodos } from "@/app/infrastrcutrue/todos/service";
-import { NextApiRequest } from "next";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
+import { ApplicationContainer } from "@/app/di";
+import { createTodo, ITodoService } from "@/app/infrastrcutrue/todos/todo.service";
+import { TYPES } from "@/app/types";
 
 export async function GET() {
     try {
-        const response = await getTodos();
+        const todoService: ITodoService = ApplicationContainer.get<ITodoService>(TYPES.TodoService);
+        const response = await todoService.getTodos();
         return NextResponse.json(response);
     } catch (e: unknown) {
         console.error(e);

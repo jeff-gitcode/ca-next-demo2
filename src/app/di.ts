@@ -1,9 +1,11 @@
 import { Container } from "inversify";
 
-import { infrastrcutrueModule } from "./infrastrcutrue/di";
+import { infrastructrueModule } from "./infrastrcutrue/di";
 import { applicationModule } from "./application/di";
 
-const AppplicationContainer = new Container();
+const ApplicationContainer = new Container();
 
-AppplicationContainer.load(infrastrcutrueModule);
-AppplicationContainer.load(applicationModule);
+ApplicationContainer.load(infrastructrueModule);
+ApplicationContainer.load(applicationModule);
+
+export { ApplicationContainer };

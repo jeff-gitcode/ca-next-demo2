@@ -1,6 +1,6 @@
-import { getTodo, updateTodo, deleteTodo } from "@/app/infrastrcutrue/todos/service";
+import { getTodo, updateTodo, deleteTodo } from "@/app/infrastrcutrue/todos/todo.service";
 import { NextApiRequest } from "next";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
