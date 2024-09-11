@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 
-import { CreateTodoDto } from "../dtos/todos/create-todo.input";
+import { TodoDto } from "../dtos/todos/create-todo.input";
 import { Todo } from "../../domain/todo";
 import { ITodoUseCase } from "../abstract/todos/itodo.usecase";
 import { ITodoRepository } from "../abstract/todos/itodo.repository";
@@ -14,7 +14,7 @@ export class TodoUseCase implements ITodoUseCase {
 
     }
 
-    async AddTodo(createTodo: CreateTodoDto): Promise<CreateTodoDto> {
+    async AddTodo(createTodo: TodoDto): Promise<TodoDto> {
         const todo: Todo = {
             title: createTodo.title,
             id: ""
@@ -22,5 +22,35 @@ export class TodoUseCase implements ITodoUseCase {
 
         await this.todoRepository.addTodo(todo);
         return createTodo;
+    }
+
+    async GetTodos(): Promise<TodoDto[]> {
+        const todos = await this.todoRepository.getTodos();
+        return todos.map(todo => {
+            return {
+                id: todo.id,
+                title: todo.title
+            }
+        });
+    }
+
+    async GetTodoById(id: string): Promise<TodoDto> {
+        const todo = await this.todoRepository.getTodoById(id);
+        return {
+            id: todo.id,
+            title: todo.title
+        }
+    }
+
+    async UpdateTodoById(id: string, todo: Request): Promise<TodoDto> {
+        const updatedTodo = await this.todoRepository.updateTodoById(id, todo);
+        return {
+            id: updatedTodo.id,
+            title: updatedTodo.title
+        }
+    }
+
+    async DeleteTodoById(id: string): Promise<string> {
+        return this.todoRepository.deleteTodoById(id);
     }
 }

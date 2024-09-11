@@ -1,4 +1,4 @@
-export type CreateTodoDto = {
+export type TodoDto = {
     id: string;
     title: string;
 };
