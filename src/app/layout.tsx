@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 
+import { ApplicationProvider } from "./presentation/applicationProvider";
+import { ApplicationContainer } from "./di";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,13 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div>
+        <ApplicationProvider container={ApplicationContainer}>
           <header> </header>
+
           <nav>
             <Link href="/presentation/todos">Todos</Link> |
             <Link href="/">About</Link>
           </nav>
-        </div>
+        </ApplicationProvider>
         {children}</body>
     </html>
   );
