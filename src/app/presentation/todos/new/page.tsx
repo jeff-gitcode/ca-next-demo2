@@ -7,7 +7,7 @@ import * as z from "zod";
 import { todoSchema } from "../../../application/validator/todo";
 import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
-import { useCreateTodo } from "../../../application/hooks/useTodo";
+import { useCreateTodoController } from "../../../application/hooks/use.todo.controller";
 import { redirect } from "next/navigation";
 
 // Interface for our form values that drastically improves type safety for our form
@@ -46,7 +46,7 @@ export default function Form() {
         createData,
         createTodo,
         isCreating,
-    } = useCreateTodo();
+    } = useCreateTodoController();
 
     const {
         handleSubmit,

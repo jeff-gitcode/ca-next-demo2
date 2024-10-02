@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 import { todoSchema } from "../../../application/validator/todo";
-import { useTodo, useUpdateTodo } from "../../../application/hooks/useTodo";
+import { useTodoController, useUpdateTodoController } from "../../../application/hooks/use.todo.controller";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,8 +32,8 @@ Input.displayName = "Input"
 export default function TodoPage({ params }: { params: { id: string } }) {
     const id = params.id;
 
-    const { updateData, updateTodo, isUpdating } = useUpdateTodo();
-    const { data, isLoading, error } = useTodo(id);
+    const { updateData, updateTodo, isUpdating } = useUpdateTodoController();
+    const { data, isLoading, error } = useTodoController(id);
 
     const {
         handleSubmit,

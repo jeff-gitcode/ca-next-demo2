@@ -2,16 +2,17 @@
 
 import Link from 'next/link';
 
-import { useDeleteTodo, useTodos } from '../../application/hooks/useTodo';
+import { useDeleteTodoController, useTodoListController } from '../../application/hooks/use.todo.controller';
 import { Todo } from '../../domain/todo';
 
-export default function TodoPage() {
-  const { data, error } = useTodos();
+export const TodoPage = async () => {
+  const { data, error, isLoading } = await useTodoListController().useTodos();
+
   const {
     deleteData,
     deleteTodo,
     isDeleting,
-  } = useDeleteTodo();
+  } = useDeleteTodoController();
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;

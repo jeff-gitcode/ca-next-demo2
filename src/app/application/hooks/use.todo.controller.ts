@@ -2,17 +2,28 @@ import useSWR, { mutate } from "swr";
 import { deleteRequest, fetcher, patchRequest, postRequest } from "../../infrastrcutrue/todos/fetcher";
 import useSWRMutation from "swr/mutation";
 
-export function useTodos() {
-    const { data, error, isLoading } = useSWR(`/api/todos`, fetcher)
+export interface TodoListUseCase {
+    useTodos: () => Promise<{ data: any, isLoading: boolean, error: any }>;
+}
+
+export function useTodoListController(): TodoListUseCase {
+
+    async function useTodos(): Promise<{ data: any, isLoading: boolean, error: any }> {
+        const { data, error, isLoading } = useSWR(`/api/todos`, fetcher)
+
+        return {
+            data,
+            isLoading,
+            error,
+        }
+    }
 
     return {
-        data,
-        isLoading,
-        error,
+        useTodos,
     }
 }
 
-export function useTodo(id: string) {
+export function useTodoController(id: string) {
     const { data, error, isLoading } = useSWR(`/api/todos/${id}`, fetcher)
 
     return {
@@ -22,7 +33,7 @@ export function useTodo(id: string) {
     }
 }
 
-export function useUpdateTodo() {
+export function useUpdateTodoController() {
     const { data: updateData, trigger: updateTodo, isMutating: isUpdating } = useSWRMutation('/api/todos', patchRequest);
 
     return {
@@ -32,7 +43,7 @@ export function useUpdateTodo() {
     }
 }
 
-export function useCreateTodo() {
+export function useCreateTodoController() {
     const { data: createData, trigger: createTodo, isMutating: isCreating } = useSWRMutation('/api/todos', postRequest);
 
     return {
@@ -42,7 +53,7 @@ export function useCreateTodo() {
     }
 }
 
-export function useDeleteTodo() {
+export function useDeleteTodoController() {
     const { data: deleteData, trigger: deleteTodo, isMutating: isDeleting } = useSWRMutation('/api/todos', deleteRequest);
 
     return {
