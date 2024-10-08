@@ -2,17 +2,19 @@
 
 import Link from 'next/link';
 
-import { useDeleteTodoController, useTodoListController } from '../../application/hooks/use.todo.controller';
+import { TodoListUseCase, useDeleteTodoController } from '../../application/hooks/use.todo.controller';
 import { Todo } from '../../domain/todo';
+import { useContext } from 'react';
+import { ApplicationContext } from '../applicationProvider';
 
-export const TodoPage = async () => {
-  const { data, error, isLoading } = await useTodoListController().useTodos();
+interface TodoPageProps {
+  todoListUseCase: TodoListUseCase;
+}
 
-  const {
-    deleteData,
-    deleteTodo,
-    isDeleting,
-  } = useDeleteTodoController();
+export const TodoPage = () => {
+  const { todoListUseCase } = useContext(ApplicationContext);
+  const { data, isLoading, error } = todoListUseCase;
+  const { deleteData, deleteTodo, isDeleting } = useDeleteTodoController();
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
@@ -40,3 +42,5 @@ export const TodoPage = async () => {
     </main>
   </div >);
 }
+
+export default TodoPage;

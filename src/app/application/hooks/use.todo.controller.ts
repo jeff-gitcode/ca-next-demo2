@@ -1,25 +1,21 @@
 import useSWR, { mutate } from "swr";
 import { deleteRequest, fetcher, patchRequest, postRequest } from "../../infrastrcutrue/todos/fetcher";
 import useSWRMutation from "swr/mutation";
+import { useState, useEffect, use } from "react";
 
 export interface TodoListUseCase {
-    useTodos: () => Promise<{ data: any, isLoading: boolean, error: any }>;
+    data: any;
+    isLoading: boolean;
+    error: any;
 }
 
 export function useTodoListController(): TodoListUseCase {
-
-    async function useTodos(): Promise<{ data: any, isLoading: boolean, error: any }> {
-        const { data, error, isLoading } = useSWR(`/api/todos`, fetcher)
-
-        return {
-            data,
-            isLoading,
-            error,
-        }
-    }
+    const { data, error, isLoading } = useSWR(`/api/todos`, fetcher)
 
     return {
-        useTodos,
+        data,
+        isLoading,
+        error,
     }
 }
 

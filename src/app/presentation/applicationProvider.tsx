@@ -8,8 +8,9 @@
 import React, { useContext, ReactNode } from "react";
 
 import { Container, interfaces } from "inversify";
+import { TodoListUseCase, useTodoListController } from "../application/hooks/use.todo.controller";
 
-const ApplicationContext = React.createContext<{ container: Container | null }>({ container: null });
+export const ApplicationContext = React.createContext<{ container: Container | null, todoListUseCase: TodoListUseCase }>({ container: null });
 
 /**
  * @todo inline component Props
@@ -20,7 +21,8 @@ type Props = {
 };
 
 export const ApplicationProvider: React.FC<Props> = (props) => {
-    return <ApplicationContext.Provider value={{ container: props.container }}>{props.children}</ApplicationContext.Provider>;
+    const todoListUseCase = useTodoListController();
+    return <ApplicationContext.Provider value={{ container: props.container, todoListUseCase: todoListUseCase }}>{props.children}</ApplicationContext.Provider>;
 };
 
 
