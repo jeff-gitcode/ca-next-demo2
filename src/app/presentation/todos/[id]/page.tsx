@@ -2,12 +2,13 @@
 
 import * as z from "zod";
 import { todoSchema } from "../../../application/validator/todo";
-import { useTodoController, useUpdateTodoController } from "../../../application/hooks/use.todo.controller";
-import React from "react";
+import { useTodoUseCase, useUpdateTodoUseCase } from "../../../application/hooks/use.todo.controller";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { redirect } from "next/navigation";
+import { ApplicationContext } from "../../applicationProvider";
 
 type FormData = z.infer<typeof todoSchema>;
 
@@ -32,8 +33,9 @@ Input.displayName = "Input"
 export default function TodoPage({ params }: { params: { id: string } }) {
     const id = params.id;
 
-    const { updateData, updateTodo, isUpdating } = useUpdateTodoController();
-    const { data, isLoading, error } = useTodoController(id);
+    const { todoUseCase, updateTodoUseCase } = useContext(ApplicationContext);
+    const { updateData, updateTodo, isUpdating } = updateTodoUseCase();
+    const { data, isLoading, error } = todoUseCase(id);
 
     const {
         handleSubmit,

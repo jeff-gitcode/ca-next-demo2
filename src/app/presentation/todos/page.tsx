@@ -1,20 +1,20 @@
 "use client";
 
 import Link from 'next/link';
-
-import { TodoListUseCase, useDeleteTodoController } from '../../application/hooks/use.todo.controller';
-import { Todo } from '../../domain/todo';
 import { useContext } from 'react';
+
+import { TodoListUseCase, useDeleteTodoUseCase } from '../../application/hooks/use.todo.controller';
+import { Todo } from '../../domain/todo';
 import { ApplicationContext } from '../applicationProvider';
 
 interface TodoPageProps {
   todoListUseCase: TodoListUseCase;
 }
 
-export const TodoPage = () => {
-  const { todoListUseCase } = useContext(ApplicationContext);
-  const { data, isLoading, error } = todoListUseCase;
-  const { deleteData, deleteTodo, isDeleting } = useDeleteTodoController();
+const TodoPage = () => {
+  const { todoListUseCase, deleteTodoUseCase } = useContext(ApplicationContext);
+  const { data, isLoading, error } = todoListUseCase();
+  const { deleteData, deleteTodo, isDeleting } = deleteTodoUseCase();
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;

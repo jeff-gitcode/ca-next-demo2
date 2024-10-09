@@ -3,13 +3,37 @@ import { deleteRequest, fetcher, patchRequest, postRequest } from "../../infrast
 import useSWRMutation from "swr/mutation";
 import { useState, useEffect, use } from "react";
 
-export interface TodoListUseCase {
-    data: any;
+export type TodoListUseCase = () => {
+    data: any[];
     isLoading: boolean;
-    error: any;
+    error: undefined;
 }
 
-export function useTodoListController(): TodoListUseCase {
+export type TodoUseCase = (id: string) => {
+    data: undefined;
+    isLoading: boolean;
+    error: undefined;
+}
+
+export type UpdateTodoUseCase = () => {
+    updateData: any;
+    updateTodo: any;
+    isUpdating: boolean;
+}
+
+export type CreateTodoUseCase = () => {
+    createData: any;
+    createTodo: any;
+    isCreating: boolean;
+}
+
+export type DeleteTodoUseCase = () => {
+    deleteData: any;
+    deleteTodo: any;
+    isDeleting: boolean;
+}
+
+export const useTodoListUseCase: TodoListUseCase = () => {
     const { data, error, isLoading } = useSWR(`/api/todos`, fetcher)
 
     return {
@@ -19,7 +43,7 @@ export function useTodoListController(): TodoListUseCase {
     }
 }
 
-export function useTodoController(id: string) {
+export const useTodoUseCase: TodoUseCase = (id: string) => {
     const { data, error, isLoading } = useSWR(`/api/todos/${id}`, fetcher)
 
     return {
@@ -29,7 +53,7 @@ export function useTodoController(id: string) {
     }
 }
 
-export function useUpdateTodoController() {
+export const useUpdateTodoUseCase: UpdateTodoUseCase = () => {
     const { data: updateData, trigger: updateTodo, isMutating: isUpdating } = useSWRMutation('/api/todos', patchRequest);
 
     return {
@@ -39,7 +63,7 @@ export function useUpdateTodoController() {
     }
 }
 
-export function useCreateTodoController() {
+export const useCreateTodoUseCase: CreateTodoUseCase = () => {
     const { data: createData, trigger: createTodo, isMutating: isCreating } = useSWRMutation('/api/todos', postRequest);
 
     return {
@@ -49,7 +73,7 @@ export function useCreateTodoController() {
     }
 }
 
-export function useDeleteTodoController() {
+export const useDeleteTodoUseCase: DeleteTodoUseCase = () => {
     const { data: deleteData, trigger: deleteTodo, isMutating: isDeleting } = useSWRMutation('/api/todos', deleteRequest);
 
     return {

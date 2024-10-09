@@ -5,10 +5,11 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { todoSchema } from "../../../application/validator/todo";
-import React from "react";
+import React, { useContext } from "react";
 import { ErrorMessage } from "@hookform/error-message";
-import { useCreateTodoController } from "../../../application/hooks/use.todo.controller";
+import { useCreateTodoUseCase } from "../../../application/hooks/use.todo.controller";
 import { redirect } from "next/navigation";
+import { ApplicationContext } from "../../applicationProvider";
 
 // Interface for our form values that drastically improves type safety for our form
 // export interface FormValues {
@@ -42,11 +43,12 @@ export default function Form() {
     //     console.log(isSubmitting);
     //     console.log(data);
     // };
+    const { createTodoUseCase } = useContext(ApplicationContext);
     const {
         createData,
         createTodo,
         isCreating,
-    } = useCreateTodoController();
+    } = createTodoUseCase();
 
     const {
         handleSubmit,
