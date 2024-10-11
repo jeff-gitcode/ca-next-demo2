@@ -85,6 +85,15 @@ pnpm dev
 # or
 bun dev
 
+## test
+$ yarn add -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom
+$ yarn add -D @types/jest
+$ yarn add create-jest
+$ yarn add -D ts-node
+# Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+$ yarn add -D @types/node
+# example shows how to configure Jest to work with Next.js.
+$ npx create-next-app --example with-jest with-jest-app
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
