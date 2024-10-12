@@ -20,8 +20,8 @@ export class TodoUseCase implements ITodoUseCase {
             id: ""
         }
 
-        await this.todoRepository.addTodo(todo);
-        return createTodo;
+        const result = await this.todoRepository.addTodo(todo);
+        return result;
     }
 
     async GetTodos(): Promise<TodoDto[]> {
