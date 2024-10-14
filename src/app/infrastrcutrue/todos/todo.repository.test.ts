@@ -52,12 +52,11 @@ describe("todo.repository", () => {
     });
 
     test("when updateTodoById should return", async () => {
+        // Act
         const request = {
             title: "title"
         } as any;
 
-
-        // Act
         const result = await todoRepository.updateTodoById("1", request);
 
         // Assert

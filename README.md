@@ -8,6 +8,8 @@
 - [x] tailwind
 - [x] ca
 - [x] swr
+- [x] jest-fetch-mock
+- [x] @testing-library/react
 
 ```javascript
 
