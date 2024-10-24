@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import useSWR from "swr";
 
-import { useTodoListUseCase } from "./use.todo.controller";
+import { useCreateTodoUseCase, useDeleteTodoUseCase, useTodoListUseCase, useUpdateTodoUseCase } from "./use.todo.controller";
 
 jest.mock("swr");
 
@@ -52,18 +52,18 @@ describe("useUpdateTodoUseCase", () => {
         // Arrange
         (useSWR as jest.Mock).mockReturnValue({
             data: undefined,
-            error: undefined,
-            isLoading: false
+            trigger: Function,
+            isMutating: false
         });
 
         // Act
-        const { result } = renderHook(() => useTodoListUseCase());
+        const { result } = renderHook(() => useUpdateTodoUseCase());
 
         // Assert
         expect(result.current).toEqual({
-            data: undefined,
-            error: undefined,
-            isLoading: false
+            updateData: undefined,
+            updateTodo: expect.any(Function),
+            isUpdating: false
         });
     });
 });
@@ -73,18 +73,18 @@ describe("useCreateTodoUseCase", () => {
         // Arrange
         (useSWR as jest.Mock).mockReturnValue({
             data: undefined,
-            error: undefined,
-            isLoading: false
+            trigger: Function,
+            isMutating: false
         });
 
         // Act
-        const { result } = renderHook(() => useTodoListUseCase());
+        const { result } = renderHook(() => useCreateTodoUseCase());
 
         // Assert
         expect(result.current).toEqual({
-            data: undefined,
-            error: undefined,
-            isLoading: false
+            createData: undefined,
+            createTodo: expect.any(Function),
+            isCreating: false
         });
     });
 });
@@ -94,18 +94,18 @@ describe("useDeleteTodoUseCase", () => {
         // Arrange
         (useSWR as jest.Mock).mockReturnValue({
             data: undefined,
-            error: undefined,
-            isLoading: false
+            trigger: Function,
+            isMutating: false
         });
 
         // Act
-        const { result } = renderHook(() => useTodoListUseCase());
+        const { result } = renderHook(() => useDeleteTodoUseCase());
 
         // Assert
         expect(result.current).toEqual({
-            data: undefined,
-            error: undefined,
-            isLoading: false
+            deleteData: undefined,
+            deleteTodo: expect.any(Function),
+            isDeleting: false
         });
     });
 });

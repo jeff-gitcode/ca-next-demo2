@@ -9,25 +9,8 @@ import React, { useContext, ReactNode } from "react";
 
 import { Container, interfaces } from "inversify";
 import { CreateTodoUseCase, DeleteTodoUseCase, TodoListUseCase, TodoUseCase, UpdateTodoUseCase, useCreateTodoUseCase, useDeleteTodoUseCase, useTodoListUseCase, useTodoUseCase, useUpdateTodoUseCase } from "../application/hooks/use.todo.controller";
+import ApplicationContext, { ApplicationContextType } from "../application/hooks/app.context";
 
-export type ApplicationContextType = {
-    container: Container | null;
-    todoListUseCase: TodoListUseCase;
-    todoUseCase: TodoUseCase;
-    createTodoUseCase: CreateTodoUseCase;
-    updateTodoUseCase: UpdateTodoUseCase;
-    deleteTodoUseCase: DeleteTodoUseCase;
-};
-
-export const ApplicationContext = React.createContext<ApplicationContextType>(
-    {
-        container: null,
-        todoListUseCase: () => ({ data: [], isLoading: false, error: undefined }),
-        todoUseCase: (id: string) => ({ data: undefined, isLoading: false, error: undefined }),
-        createTodoUseCase: () => ({ createData: undefined, createTodo: undefined, isCreating: false }),
-        updateTodoUseCase: () => ({ updateData: undefined, updateTodo: undefined, isUpdating: false }),
-        deleteTodoUseCase: () => ({ deleteData: undefined, deleteTodo: undefined, isDeleting: false }),
-    });
 
 /**
  * @todo inline component Props
@@ -58,7 +41,6 @@ export const ApplicationProvider: React.FC<Props> = (props) => {
     </ApplicationContext.Provider>;
 };
 
-
 // import { createContext, ReactNode } from 'react';
 // import React from 'react';
 // import { Container } from 'inversify';
@@ -86,3 +68,4 @@ export const ApplicationProvider: React.FC<Props> = (props) => {
 //         {props.children}
 //     </ApplicationContext.Provider>);
 // }
+

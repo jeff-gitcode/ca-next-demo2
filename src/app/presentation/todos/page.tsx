@@ -5,14 +5,14 @@ import { useContext } from 'react';
 
 import { TodoListUseCase, useDeleteTodoUseCase } from '../../application/hooks/use.todo.controller';
 import { Todo } from '../../domain/todo';
-import { ApplicationContext } from '../applicationProvider';
+import { useAppContext } from '@/app/application/hooks/app.context';
 
 interface TodoPageProps {
   todoListUseCase: TodoListUseCase;
 }
 
 const TodoPage = () => {
-  const { todoListUseCase, deleteTodoUseCase } = useContext(ApplicationContext);
+  const { todoListUseCase, deleteTodoUseCase } = useAppContext();
   const { data, isLoading, error } = todoListUseCase();
   const { deleteData, deleteTodo, isDeleting } = deleteTodoUseCase();
 
