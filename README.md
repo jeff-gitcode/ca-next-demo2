@@ -10,6 +10,7 @@
 - [x] swr
 - [x] jest-fetch-mock
 - [x] @testing-library/react
+- [x] jest-preview
 
 ```javascript
 
