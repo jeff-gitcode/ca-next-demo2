@@ -79,5 +79,8 @@ describe("TodoPage", () => {
         expect(screen.getByText("Create")).toBeInTheDocument();
         expect(screen.getByText("Edit")).toBeInTheDocument();
         expect(screen.getByText("Delete")).toBeInTheDocument();
+
+        expect(screen.getByRole('link', { name: 'Create' })).toHaveAttribute('href', '/presentation/todos/new');
+        expect(screen.getByRole('link', { name: 'Edit' })).toHaveAttribute('href', '/presentation/todos/1');
     });
 });
