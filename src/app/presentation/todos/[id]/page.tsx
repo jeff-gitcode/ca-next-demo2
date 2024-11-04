@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { redirect } from "next/navigation";
-import ApplicationContext from "@/app/application/hooks/app.context";
+import ApplicationContext, { useAppContext } from "@/app/application/hooks/app.context";
 
 type FormData = z.infer<typeof todoSchema>;
 
@@ -33,7 +33,7 @@ Input.displayName = "Input"
 export default function TodoPage({ params }: { params: { id: string } }) {
     const id = params.id;
 
-    const { todoUseCase, updateTodoUseCase } = useContext(ApplicationContext);
+    const { todoUseCase, updateTodoUseCase } = useAppContext();
     const { updateData, updateTodo, isUpdating } = updateTodoUseCase();
     const { data, isLoading, error } = todoUseCase(id);
 
@@ -50,7 +50,7 @@ export default function TodoPage({ params }: { params: { id: string } }) {
     if (error) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>;
 
-    console.log(data);
+    // console.log(data);
 
     const actions: () => void = handleSubmit(async (data: FormData) => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
