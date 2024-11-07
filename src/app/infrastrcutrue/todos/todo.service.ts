@@ -75,7 +75,7 @@ export class TodoService implements ITodoService {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(req),
+                    body: JSON.stringify(await req.json()),
                 }
             );
             const data = await response.json();
