@@ -32,7 +32,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "jest.config.old"
-, "jest.setup.old"  ],
+    "jest.config.old",
+    "jest.setup.old",
+    "src/app/presentation/todos/[id]/page.t1",
+    "src/app/presentation/todos/[id]/page.tsx"
+  ],
   "exclude": ["node_modules"]
 }

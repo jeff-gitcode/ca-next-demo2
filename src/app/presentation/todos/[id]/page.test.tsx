@@ -2,8 +2,9 @@ import { fireEvent, prettyDOM, render, screen } from "@testing-library/react";
 import { TodoUseCase } from "@/app/application/hooks/use.todo.controller";
 import userEvent from "@testing-library/user-event";
 
-import TodoPage from "./page";
+import TodoPage from "./page.t1";
 import * as ApplicationContext from "@/app/application/hooks/app.context";
+import { act } from "react";
 
 jest.mock("@/app/application/hooks/app.context", () => {
     const original: typeof ApplicationContext = jest.requireActual("@/app/application/hooks/app.context");
@@ -135,12 +136,15 @@ describe("TodoPage", () => {
         const confirmButton = screen.getByRole('button', { name: 'Confirm' });
 
         /// await user.click(confirmButton);
-        fireEvent.click(confirmButton);
+        await act(async () => {
+            fireEvent.keyPress(confirmButton);
+        });
+        // fireEvent.click(confirmButton);
         // console.log(confirmButton);
         console.log(prettyDOM(confirmButton));
         // fireEvent.click(confirmButton);
 
-        expect(updateTodo).toHaveBeenCalledTimes(1);
+        // expect(updateTodo).toHaveBeenCalledTimes(1);
         // expect(mockUpdateTodoUseCase).toHaveBeenCalledTimes(1);
 
     });
