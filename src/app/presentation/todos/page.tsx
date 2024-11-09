@@ -11,7 +11,7 @@ interface TodoPageProps {
   todoListUseCase: TodoListUseCase;
 }
 
-const TodoPage = () => {
+const TodoListPage = () => {
 
 
   const { todoListUseCase, deleteTodoUseCase } = useAppContext();
@@ -47,4 +47,4 @@ const TodoPage = () => {
     </div >);
 }
 
-export default TodoPage;
+export default TodoListPage;

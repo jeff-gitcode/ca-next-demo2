@@ -4,11 +4,11 @@ import { debug } from 'jest-preview';
 import React from "react";
 import { useRouter } from "next/router";
 
-import TodoPage from "./page";
+import TodoListPage from "./page";
 import * as UseTodoController from "@/app/application/hooks/use.todo.controller";
 import * as ApplicationContext from "@/app/application/hooks/app.context";
 import { TodoListUseCase } from '@/app/application/hooks/use.todo.controller';
-import { ApplicationProviderMock, nextRender } from '../setupJest';
+// import { ApplicationProviderMock, nextRender } from '../setupJest';
 
 jest.mock("@/app/application/hooks/app.context", () => {
     const original: typeof ApplicationContext = jest.requireActual("@/app/application/hooks/app.context");
@@ -76,7 +76,7 @@ describe("TodoPage", () => {
         mockDeleteTodoUseCase.mockReturnValue({ deleteData, deleteTodo, isDeleting });
 
         // Act
-        render(<TodoPage />);
+        render(<TodoListPage />);
 
         screen.debug();
 
