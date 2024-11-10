@@ -1,9 +1,13 @@
-import { fireEvent, prettyDOM, render, screen } from "@testing-library/react";
+import { fireEvent, prettyDOM, render, screen, waitFor } from "@testing-library/react";
 import { TodoUseCase } from "@/app/application/hooks/use.todo.controller";
 import userEvent from "@testing-library/user-event";
 
 import { FormValue, todoSchema } from "@/app/application/validator/todo";
 import { useRouter } from "next/navigation";
+import * as ApplicationContext from "@/app/application/hooks/app.context";
+import { act } from "react";
+import TodoPage from "./page";
+import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const mockPush = jest.fn();
 jest.mock("next/navigation", () => ({
@@ -16,10 +20,6 @@ jest.mock("next/navigation", () => ({
         };
     },
 }));
-
-import * as ApplicationContext from "@/app/application/hooks/app.context";
-import { act } from "react";
-import TodoPage from "./page";
 
 jest.mock("@/app/application/hooks/app.context", () => {
     const original: typeof ApplicationContext = jest.requireActual("@/app/application/hooks/app.context");
@@ -83,7 +83,7 @@ describe("TodoPage", () => {
 
         expect(screen.getByPlaceholderText('ID')).toBeInTheDocument();
         expect(screen.getByPlaceholderText('Title')).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Confirm' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
 
         expect(container).toMatchSnapshot();
     });
@@ -136,7 +136,8 @@ describe("TodoPage", () => {
         const isLoading = false;
         const error = undefined;
         const updateData = undefined;
-        const updateTodo = jest.fn();
+        const mockUpdateTodo = jest.fn();
+        const updateTodo = mockUpdateTodo;
         const isUpdating = false;
 
         mockTodoUseCase.mockReturnValue({ data, isLoading, error });
@@ -145,26 +146,22 @@ describe("TodoPage", () => {
         // Act
         // const { user } = setup(<TodoPage params={{ id: "1" }} />);
         render(<TodoPage params={{ id: "1" }} />);
-        // await user.type(screen.getByPlaceholderText('Title'), 'updated title');
+        const title = screen.getByPlaceholderText('Title');
+        await fireEvent.input(title, { target: { value: 'updated title' } });
         screen.debug();
 
         // Assert
         const confirmButton = screen.getByTestId('submit');
-        /// const confirmButton = screen.getByRole('button', { name: 'Confirm' });
+        await waitFor(() => {
+            fireEvent.click(confirmButton);
+            // console.log(confirmButton);
+            console.log(prettyDOM(confirmButton));
+        });
 
-        /// await user.click(confirmButton);
-        // await act(async () => {
-        //     fireEvent.keyPress(confirmButton);
+        // await waitFor(() => {
+        expect(mockUpdateTodo).toHaveBeenCalledWith({ requestBody: { id: "1", title: "updated title" }, queryParams: { id: "1" } });
+        expect(mockPush).toHaveBeenCalledWith(`/presentation/todos`);
         // });
-        await fireEvent.click(confirmButton);
-        // console.log(confirmButton);
-        console.log(prettyDOM(confirmButton));
-        // fireEvent.click(confirmButton);
-
-        // expect(updateTodo).toHaveBeenCalledTimes(1);
-        expect(mockPush).toHaveBeenCalledTimes(1);
-        // expect(mockUpdateTodoUseCase).toHaveBeenCalledTimes(1);
-        // expect(mockUpdateTodoUseCase).toHaveBeenCalledWith({ requestBody: { id: "1", title: "updated title" }, queryParams: { id: "1" } });
     }, 30000);
 });
 

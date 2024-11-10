@@ -16,12 +16,10 @@ exports[`TodoPage should render 1`] = `
       name="title"
       placeholder="Title"
     />
-    <button
-      class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5"
+    <input
+      data-testid="submit"
       type="submit"
-    >
-      Confirm
-    </button>
+    />
   </form>
 </div>
 `;
