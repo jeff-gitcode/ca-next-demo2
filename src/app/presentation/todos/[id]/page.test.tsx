@@ -8,6 +8,7 @@ import * as ApplicationContext from "@/app/application/hooks/app.context";
 import { act } from "react";
 import TodoPage from "./page";
 import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { ErrorMessage } from "@hookform/error-message";
 
 const mockPush = jest.fn();
 jest.mock("next/navigation", () => ({
@@ -30,6 +31,14 @@ jest.mock("@/app/application/hooks/app.context", () => {
     });
 });
 const mockUseAppContext = ApplicationContext.useAppContext as jest.Mock;
+
+jest.mock('@hookform/error-message', () => {
+    const original = jest.requireActual('@hookform/error-message');
+    return {
+        ...original,
+        ErrorMessage: jest.fn(props => <div {...props} />),
+    };
+});
 
 function setup(ui: React.ReactNode) {
     return {
@@ -163,5 +172,55 @@ describe("TodoPage", () => {
         expect(mockPush).toHaveBeenCalledWith(`/presentation/todos`);
         // });
     }, 30000);
+
+    test("should render error message", async () => {
+        // Arrange
+        const data = {
+            id: "1",
+            title: "test title",
+            description: "test description",
+            status: "test status",
+            created_at: "test created_at",
+            updated_at: "test updated_at",
+        };
+
+        const isLoading = false;
+        const error = undefined;
+        const updateData = undefined;
+        const mockUpdateTodo = jest.fn();
+        const updateTodo = mockUpdateTodo;
+        const isUpdating = false;
+
+        mockTodoUseCase.mockReturnValue({ data, isLoading, error });
+        mockUpdateTodoUseCase.mockReturnValue({ updateData, updateTodo, isUpdating });
+
+        // Act
+        // const { user } = setup(<TodoPage params={{ id: "1" }} />);
+        render(<TodoPage params={{ id: "1" }} />);
+        const title = screen.getByPlaceholderText('Title');
+        await fireEvent.input(title, { target: { value: '' } });
+
+        screen.debug();
+
+        // Assert
+        const confirmButton = screen.getByTestId('submit');
+        await waitFor(() => {
+            fireEvent.click(confirmButton);
+            // console.log(confirmButton);
+            console.log(prettyDOM(confirmButton));
+        });
+
+        // await waitFor(() => {
+        expect(mockUpdateTodo).not.toHaveBeenCalled();
+        expect(mockPush).not.toHaveBeenCalled();
+        expect(ErrorMessage).toHaveBeenCalledWith({ name: 'title', errors: {} }, {});
+        // const el = screen.getByText('String must contain at least 1 character(s)');
+        // expect(el).toBeInTheDocument();
+        // expect(screen.findByText('/String must contain at least 1 character(s)/')).toBeInTheDocument();
+        // });
+    }, 30000);
+
+
+
 });
 

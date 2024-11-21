@@ -113,4 +113,74 @@ describe("TodoPage", () => {
         expect(deleteTodo).toHaveBeenCalledWith({ queryParams: { id: "1" } });
         screen.debug();
     });
+
+    test("should render loading", () => {
+        // Arrange
+        const data = undefined;
+        const isLoading = true;
+        const error = undefined;
+        const deleteData = undefined;
+        const deleteTodo = jest.fn();
+        const isDeleting = false;
+
+        mockTodoListUseCase.mockReturnValue({ data, isLoading, error });
+        mockDeleteTodoUseCase.mockReturnValue({ deleteData, deleteTodo, isDeleting });
+
+        // Act
+        render(<TodoListPage />);
+
+        // Assert
+        expect(screen.getByText('loading...')).toBeInTheDocument();
+    });
+
+    test("should render error", () => {
+        // Arrange
+        const data = undefined;
+        const isLoading = false;
+        const error = new Error("test error");
+        const deleteData = undefined;
+        const deleteTodo = jest.fn();
+        const isDeleting = false;
+
+        mockTodoListUseCase.mockReturnValue({ data, isLoading, error });
+        mockDeleteTodoUseCase.mockReturnValue({ deleteData, deleteTodo, isDeleting });
+
+        // Act
+        render(<TodoListPage />);
+
+        // Assert
+        expect(screen.getByText('failed to load')).toBeInTheDocument();
+    });
+
+    test("should delete todo", () => {
+        // Arrange
+        const data =
+            [{
+                id: "1",
+                title: "test title",
+                description: "test description",
+                status: "test status",
+                created_at: "test created_at",
+                updated_at: "test updated_at",
+            }];
+
+        const isLoading = false;
+        const error = undefined;
+        const deleteData = undefined;
+        const deleteTodo = jest.fn();
+        const isDeleting = false;
+
+        mockTodoListUseCase.mockReturnValue({ data, isLoading, error });
+        mockDeleteTodoUseCase.mockReturnValue({ deleteData, deleteTodo, isDeleting });
+
+        // Act
+        render(<TodoListPage />);
+
+        // Assert
+        const deleteButton = screen.getByRole('button', { name: 'Delete' });
+        fireEvent.click(deleteButton);
+
+        expect(deleteTodo).toHaveBeenCalledWith({ queryParams: { id: "1" } });
+    });
+
 });
