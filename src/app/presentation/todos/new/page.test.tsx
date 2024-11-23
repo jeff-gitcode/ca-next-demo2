@@ -2,17 +2,9 @@ import { fireEvent, prettyDOM, render, screen, waitFor } from "@testing-library/
 import { useRouter } from "next/navigation";
 
 import * as ApplicationContext from "@/app/application/hooks/app.context";
-import TodoPage from "./page";
-
-jest.mock("@/app/application/hooks/app.context", () => {
-    const original: typeof ApplicationContext = jest.requireActual("@/app/application/hooks/app.context");
-
-    return ({
-        ...original,
-        useAppContext: jest.fn(),
-    });
-});
-const mockUseAppContext = ApplicationContext.useAppContext as jest.Mock;
+import NewTodo from "./page";
+import { ErrorMessage } from "@hookform/error-message";
+import { create } from "node_modules/axios/index.cjs";
 
 const mockPush = jest.fn();
 jest.mock("next/navigation", () => ({
@@ -25,6 +17,25 @@ jest.mock("next/navigation", () => ({
         };
     },
 }));
+
+
+jest.mock("@/app/application/hooks/app.context", () => {
+    const original: typeof ApplicationContext = jest.requireActual("@/app/application/hooks/app.context");
+
+    return ({
+        ...original,
+        useAppContext: jest.fn(),
+    });
+});
+const mockUseAppContext = ApplicationContext.useAppContext as jest.Mock;
+
+jest.mock('@hookform/error-message', () => {
+    const original = jest.requireActual('@hookform/error-message');
+    return {
+        ...original,
+        ErrorMessage: jest.fn(props => <div {...props} />),
+    };
+});
 
 describe("Page", () => {
     let mockCreateTodoUseCase: jest.Mock;
@@ -46,77 +57,41 @@ describe("Page", () => {
         // Arrange
         const data = {
             id: "1",
-            title: "test title",
-            description: "test description",
-            status: "test status",
-            created_at: "test created_at",
-            updated_at: "test updated_at",
+            title: "test title"
         };
 
-        const isLoading = true;
-        const error = undefined;
+        const createData = undefined;
+        const isCreating = true;
         const createTodo = undefined;
 
-        mockCreateTodoUseCase.mockReturnValue({ createTodo });
+        mockCreateTodoUseCase.mockReturnValue({ createData, createTodo, isCreating });
 
         // Act
-        const { container } = render(<TodoPage params={{ id: "1" }} />);
-    });
-
-    test("should render loading", () => {
-        // Arrange
-        const data = undefined;
-        const isLoading = true;
-        const error = undefined;
-        const updateData = undefined;
-
-        mockTodoUseCase.mockReturnValue({ data, isLoading, error });
-        mockCreateTodoUseCase.mockReturnValue({ updateData });
-
-        // Act
-        const { container } = render(<TodoPage params={{ id: "1" }} />);
+        const { container } = render(<NewTodo />);
 
         // Assert
-        expect(screen.getByText("loading...")).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('ID')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Title')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
     });
 
-    test("should render error", () => {
-        // Arrange
-        const data = undefined;
-        const isLoading = false;
-        const error = new Error("error");
-        const updateData = undefined;
-
-        mockTodoUseCase.mockReturnValue({ data, isLoading, error });
-        mockCreateTodoUseCase.mockReturnValue({ updateData });
-
-        // Act
-        const { container } = render(<TodoPage params={{ id: "1" }} />);
-
-        // Assert
-        expect(screen.getByText("failed to load")).toBeInTheDocument();
-    });
-
-    test("should update todo", async () => {
+    test("should create todo", async () => {
         // Arrange
         const data = {
             id: "1",
-            title: "test title",
-            description: "test description",
-            status: "test status",
-            created_at: "test created_at",
-            updated_at: "test updated_at",
+            title: "test title"
         };
 
         const isLoading = false;
         const error = undefined;
-        const updateData = undefined;
+        const createData = undefined;
+        const createTodo = jest.fn();
+        const isCreating = false;
 
-        mockTodoUseCase.mockReturnValue({ data, isLoading, error });
-        mockCreateTodoUseCase.mockReturnValue({ updateData });
+        mockCreateTodoUseCase.mockReturnValue({ createData, createTodo, isCreating });
 
         // Act
-        const { container } = render(<TodoPage params={{ id: "1" }} />);
+        const { container } = render(<NewTodo />);
 
         fireEvent.input(screen.getByPlaceholderText("Title"), {
             target: {
@@ -126,15 +101,83 @@ describe("Page", () => {
 
         screen.debug();
 
-
         await waitFor(() => {
             fireEvent.click(screen.getByTestId("submit"));
         });
 
         // Assert
         expect(mockCreateTodoUseCase).toHaveBeenCalled();
-        expect(mockCreateTodoUseCase).toHaveBeenCalledWith({ requestBody: { id: "1", title: "create title" }, queryParams: { id: "1" } });
+        expect(createTodo).toHaveBeenCalledWith({ requestBody: { id: "", title: "create title" } });
+        expect(mockPush).toHaveBeenCalled();
         expect(mockPush).toHaveBeenCalledWith("/presentation/todos");
-
     });
+
+    test("should not create todo", async () => {
+        // Arrange
+        const data = {
+            id: "1",
+            title: "test title"
+        };
+
+        const createData = undefined;
+        const createTodo = jest.fn();
+        const isCreating = false;
+
+        mockCreateTodoUseCase.mockReturnValue({ createData, createTodo, isCreating });
+
+        // Act
+        const { container } = render(<NewTodo />);
+
+        fireEvent.input(screen.getByPlaceholderText("Title"), {
+            target: {
+                value: "",
+            },
+        });
+
+        screen.debug();
+
+        await waitFor(() => {
+            fireEvent.click(screen.getByTestId("submit"));
+        });
+
+        // Assert
+        expect(createTodo).not.toHaveBeenCalled();
+        expect(mockPush).not.toHaveBeenCalled();
+    });
+
+    test("should render error message", async () => {
+        // Arrange
+        const data = {
+            id: "1",
+            title: "test title"
+        };
+
+        const createData = undefined;
+        const createTodo = jest.fn();
+        const isCreating = false;
+
+        mockCreateTodoUseCase.mockReturnValue({ createData, createTodo, isCreating });
+
+        // Act
+        const { container } = render(<NewTodo />);
+
+        fireEvent.input(screen.getByPlaceholderText("Title"), {
+            target: {
+                value: "",
+            },
+        });
+
+        screen.debug();
+
+        await waitFor(() => {
+            fireEvent.click(screen.getByTestId("submit"));
+        });
+
+        // Assert
+        expect(createTodo).not.toHaveBeenCalled();
+        expect(mockPush).not.toHaveBeenCalled();
+        expect(ErrorMessage).toHaveBeenCalledWith({ name: 'title', errors: {} }, {});
+    });
+
+
 });

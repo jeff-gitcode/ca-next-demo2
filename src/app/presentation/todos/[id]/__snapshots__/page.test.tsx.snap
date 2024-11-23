@@ -16,6 +16,10 @@ exports[`TodoPage should render 1`] = `
       name="title"
       placeholder="Title"
     />
+    <div
+      errors="[object Object]"
+      name="title"
+    />
     <input
       data-testid="submit"
       type="submit"
