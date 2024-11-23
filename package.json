@@ -8,8 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "format": "prettier --write .",
+    "format": "prettier --write --list-different .",
     "format:check": "prettier --check .",
+    "format:diff": "prettier --list-different .",
     "test:watch": "jest --watch",
     "build:analyze": "yarn build && source-map-explorer .next/static/**/*.js"
   },

@@ -1,4 +1,4 @@
-import { Todo } from "@/app/domain/todo";
+import { Todo } from '@/app/domain/todo';
 
 export abstract class ITodoRepository {
   abstract addTodo(todo: Todo): Promise<Todo>;

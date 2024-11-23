@@ -4,41 +4,54 @@
 
 // export const MyContext = createContext("");
 
+import React, { useContext, ReactNode } from 'react';
 
-import React, { useContext, ReactNode } from "react";
-
-import { Container, interfaces } from "inversify";
-import { CreateTodoUseCase, DeleteTodoUseCase, TodoListUseCase, TodoUseCase, UpdateTodoUseCase, useCreateTodoUseCase, useDeleteTodoUseCase, useTodoListUseCase, useTodoUseCase, useUpdateTodoUseCase } from "../application/hooks/use.todo.controller";
-import ApplicationContext, { ApplicationContextType } from "../application/hooks/app.context";
-
+import { Container, interfaces } from 'inversify';
+import {
+  CreateTodoUseCase,
+  DeleteTodoUseCase,
+  TodoListUseCase,
+  TodoUseCase,
+  UpdateTodoUseCase,
+  useCreateTodoUseCase,
+  useDeleteTodoUseCase,
+  useTodoListUseCase,
+  useTodoUseCase,
+  useUpdateTodoUseCase,
+} from '../application/hooks/use.todo.controller';
+import ApplicationContext, {
+  ApplicationContextType,
+} from '../application/hooks/app.context';
 
 /**
  * @todo inline component Props
  */
 type Props = {
-    children: ReactNode;
-    container: Container;
+  children: ReactNode;
+  container: Container;
 };
 
 export const ApplicationProvider: React.FC<Props> = (props) => {
-    const todoListUseCase: TodoListUseCase = useTodoListUseCase;
-    const todoUseCase: TodoUseCase = useTodoUseCase;
-    const createTodoUseCase: CreateTodoUseCase = useCreateTodoUseCase;
-    const updateTodoUseCase: UpdateTodoUseCase = useUpdateTodoUseCase;
-    const deleteTodoUseCase: DeleteTodoUseCase = useDeleteTodoUseCase;
+  const todoListUseCase: TodoListUseCase = useTodoListUseCase;
+  const todoUseCase: TodoUseCase = useTodoUseCase;
+  const createTodoUseCase: CreateTodoUseCase = useCreateTodoUseCase;
+  const updateTodoUseCase: UpdateTodoUseCase = useUpdateTodoUseCase;
+  const deleteTodoUseCase: DeleteTodoUseCase = useDeleteTodoUseCase;
 
-    const value: ApplicationContextType = {
-        container: props.container,
-        todoListUseCase: todoListUseCase,
-        todoUseCase: todoUseCase,
-        createTodoUseCase: createTodoUseCase,
-        updateTodoUseCase: updateTodoUseCase,
-        deleteTodoUseCase: deleteTodoUseCase,
-    };
+  const value: ApplicationContextType = {
+    container: props.container,
+    todoListUseCase: todoListUseCase,
+    todoUseCase: todoUseCase,
+    createTodoUseCase: createTodoUseCase,
+    updateTodoUseCase: updateTodoUseCase,
+    deleteTodoUseCase: deleteTodoUseCase,
+  };
 
-    return <ApplicationContext.Provider value={value}>
-        {props.children}
-    </ApplicationContext.Provider>;
+  return (
+    <ApplicationContext.Provider value={value}>
+      {props.children}
+    </ApplicationContext.Provider>
+  );
 };
 
 // import { createContext, ReactNode } from 'react';
@@ -68,4 +81,3 @@ export const ApplicationProvider: React.FC<Props> = (props) => {
 //         {props.children}
 //     </ApplicationContext.Provider>);
 // }
-

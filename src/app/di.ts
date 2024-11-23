@@ -1,7 +1,7 @@
-import { Container } from "inversify";
+import { Container } from 'inversify';
 
-import { infrastructrueModule } from "./infrastrcutrue/di";
-import { applicationModule } from "./application/di";
+import { infrastructrueModule } from './infrastrcutrue/di';
+import { applicationModule } from './application/di';
 
 const ApplicationContainer = new Container();
 

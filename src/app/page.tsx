@@ -1,6 +1,7 @@
-
 export default function Home() {
-  return (<div className="flex text-2xl my-8 font-bold mx-auto">CA Nextjs Demo2</div>);
+  return (
+    <div className="mx-auto my-8 flex text-2xl font-bold">CA Nextjs Demo2</div>
+  );
 
   // return (
   //   <main className="flex min-h-screen flex-col items-center justify-between p-24">

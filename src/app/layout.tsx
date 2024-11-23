@@ -1,14 +1,14 @@
 'use client';
 
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Link from "next/link";
+import { Inter } from 'next/font/google';
+import './globals.css';
+import Link from 'next/link';
 
-import { ApplicationContainer } from "./di";
-import { useState } from "react";
-import { ApplicationProvider } from "./presentation/applicationProvider";
+import { ApplicationContainer } from './di';
+import { useState } from 'react';
+import { ApplicationProvider } from './presentation/applicationProvider';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
