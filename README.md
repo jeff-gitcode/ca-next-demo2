@@ -14,6 +14,8 @@
 - [x] husky
 - [x] Lint-Staged
 - [x] Commitlint
+- [x] storybook
+-
 
 ```javascript
 
@@ -107,6 +109,9 @@ $ npx husky init
 $ yarn add -D lint-staged
 # Commitlint
 $ yarn add -D @commitlint/{cli,config-conventional} @commitlint/types conventional-changelog-atom
+# storybook
+$ npx storybook@latest init
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
