@@ -11,6 +11,9 @@
 - [x] jest-fetch-mock
 - [x] @testing-library/react
 - [x] jest-preview
+- [x] husky
+- [x] Lint-Staged
+- [x] Commitlint
 
 ```javascript
 
@@ -97,6 +100,13 @@ $ yarn add -D ts-node
 $ yarn add -D @types/node
 # example shows how to configure Jest to work with Next.js.
 $ npx create-next-app --example with-jest with-jest-app
+# husky
+$ yarn add -D husky
+$ npx husky init
+# Lint-Staged
+$ yarn add -D lint-staged
+# Commitlint
+$ yarn add -D @commitlint/{cli,config-conventional} @commitlint/types conventional-changelog-atom
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
