@@ -11,13 +11,16 @@ import { useState, useEffect, use } from 'react';
 export type TodoListUseCase = () => {
   data: any[];
   isLoading: boolean;
-  error: undefined;
+  error: string;
 };
 
 export type TodoUseCase = (id: string) => {
-  data: undefined;
+  data: {
+    id: string;
+    title: string;
+  };
   isLoading: boolean;
-  error: undefined;
+  error: string;
 };
 
 export type UpdateTodoUseCase = () => {

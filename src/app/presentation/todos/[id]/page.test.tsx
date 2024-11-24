@@ -79,10 +79,6 @@ describe('TodoPage', () => {
     const data = {
       id: '1',
       title: 'test title',
-      description: 'test description',
-      status: 'test status',
-      created_at: 'test created_at',
-      updated_at: 'test updated_at',
     };
 
     const isLoading = true;

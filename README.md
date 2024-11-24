@@ -111,7 +111,7 @@ $ yarn add -D lint-staged
 $ yarn add -D @commitlint/{cli,config-conventional} @commitlint/types conventional-changelog-atom
 # storybook
 $ npx storybook@latest init
-
+$ yarn add -D  @storybook/addon-console
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

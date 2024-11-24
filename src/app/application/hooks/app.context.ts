@@ -19,11 +19,11 @@ export type ApplicationContextType = {
 
 const ApplicationContext = React.createContext<ApplicationContextType>({
   container: null,
-  todoListUseCase: () => ({ data: [], isLoading: false, error: undefined }),
+  todoListUseCase: () => ({ data: [], isLoading: false, error: '' }),
   todoUseCase: (id: string) => ({
-    data: undefined,
+    data: { id: '', title: '' },
     isLoading: false,
-    error: undefined,
+    error: '',
   }),
   createTodoUseCase: () => ({
     createData: undefined,
@@ -31,7 +31,10 @@ const ApplicationContext = React.createContext<ApplicationContextType>({
     isCreating: false,
   }),
   updateTodoUseCase: () => ({
-    updateData: undefined,
+    updateData: {
+      id: '',
+      title: '',
+    },
     updateTodo: undefined,
     isUpdating: false,
   }),
