@@ -19,6 +19,38 @@
 
 ```javascript
 
+# node
+# nvm
+https://github.com/coreybutler/nvm-windows#installation--upgrades
+$ nvm ls available
+
+# node
+$ nvm install v22.12.0
+$ nvm use 22.12.0
+$ node -v
+$ npm -v
+$ npm install --global yarn
+
+# github
+$ gh auth login
+C:\dev\nextjs\ca-next-demo2>gh auth login
+? Where do you use GitHub? GitHub.com
+? What is your preferred protocol for Git operations on this host? HTTPS
+? Authenticate Git with your GitHub credentials? Yes
+? How would you like to authenticate GitHub CLI? Login with a web browser
+
+! First copy your one-time code: AAAA-8888
+Press Enter to open https://github.com/login/device in your browser...
+✓ Authentication complete.
+- gh config set -h github.com git_protocol https
+✓ Configured git protocol
+✓ Logged in as jeff-gitcode
+! You were already logged in to this account
+
+ $ git config --global user.email "you@example.com"
+ $ git config --global user.name "Your Name"
+
+
 C:\dev\nextjs>npx create-next-app@latest --ts ca-next-demo
 √ What is your project named? ... ca-next-demo
 √ Would you like to use TypeScript? ... No / Yes
