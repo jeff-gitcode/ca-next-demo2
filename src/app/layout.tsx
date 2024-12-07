@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ApplicationContainer } from './di';
 import { useState } from 'react';
 import { ApplicationProvider } from './presentation/applicationProvider';
+import Nav from './presentation/nav';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,10 +27,7 @@ export default function RootLayout({
         <ApplicationProvider container={ApplicationContainer}>
           <div>
             <header> </header>
-            <nav>
-              <Link href="/presentation/todos">Todos</Link> |
-              <Link href="/">About</Link>
-            </nav>
+            <Nav />
           </div>
           {children}
         </ApplicationProvider>
