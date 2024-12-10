@@ -3,9 +3,11 @@ import { ApplicationProvider } from '@/app/presentation/applicationProvider';
 import TodoPage from '@/app/presentation/todos/[id]/page';
 import { Meta, StoryObj } from '@storybook/react';
 import ApplicationContext, * as actual from '@/app/application/hooks/app.context';
+import { userEvent, within, expect } from '@storybook/test';
 
 import { fn } from '@storybook/test';
 import { Container } from 'inversify';
+import exp from 'constants';
 
 export const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
@@ -74,5 +76,63 @@ export const Base: Story = {
   },
   args: {
     params: { id: '1' },
+  },
+};
+
+export const FilledForm: Story = {
+  beforeEach: () => {
+    useAppContext.mockReturnValue({
+      container: ApplicationContainer,
+      todoListUseCase: () => ({
+        data: [
+          {
+            id: '1',
+            title: 'test title',
+          },
+        ],
+        isLoading: false,
+        error: '',
+      }),
+      todoUseCase: (id: string) => ({
+        data: { id: id, title: 'test title' },
+        isLoading: false,
+        error: '',
+      }),
+      updateTodoUseCase: () => ({
+        updateData: null,
+        updateTodo: fn(),
+        isUpdating: false,
+      }),
+      createTodoUseCase: () => ({
+        createData: null,
+        createTodo: fn(),
+        isCreating: false,
+      }),
+      deleteTodoUseCase: () => ({
+        deleteData: null,
+        deleteTodo: fn(),
+        isDeleting: false,
+      }),
+    });
+  },
+  args: {
+    params: { id: '1' },
+  },
+
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const { updateTodoUseCase } = useAppContext();
+    const { updateTodo } = updateTodoUseCase();
+
+    const title = canvas.getByPlaceholderText('Title');
+    await userEvent.type(title, ' update');
+
+    const submit = canvas.getByRole('button', { name: /submit/i });
+    await userEvent.click(submit);
+
+    await canvas.getByText('test title update');
+    // await expect(updateTodo).toHaveBeenCalled();
+    await expect(updateTodo).toHaveBeenCalled(); // With({ id: '1', title: 'new title' });
   },
 };
