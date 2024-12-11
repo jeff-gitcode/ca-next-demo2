@@ -4,7 +4,7 @@ import NewTodo from '@/app/presentation/todos/new/page';
 import { Meta, StoryObj } from '@storybook/react';
 import ApplicationContext, * as actual from '@/app/application/hooks/app.context';
 
-import { fn } from '@storybook/test';
+import { userEvent, within, fn, expect, waitFor } from '@storybook/test';
 import { Container } from 'inversify';
 
 export const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
@@ -33,6 +33,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const mockGoBack = fn();
 export const Base: Story = {
   beforeEach: () => {
     // jest.clearAllMocks();
@@ -60,7 +61,7 @@ export const Base: Story = {
       }),
       createTodoUseCase: () => ({
         createData: null,
-        createTodo: fn(),
+        createTodo: () => mockGoBack,
         isCreating: false,
       }),
       deleteTodoUseCase: () => ({
@@ -70,7 +71,16 @@ export const Base: Story = {
       }),
     });
   },
-  // args: {
-  //   params: { id: '1' },
-  // },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const title = canvas.getByPlaceholderText('Title');
+    await userEvent.type(title, 'new todo', { delay: 100 });
+
+    const submit = canvas.getByRole('button', { name: /submit/i });
+    await userEvent.click(submit, { delay: 1000 });
+
+    await waitFor(async () => {
+      expect(await mockGoBack).toHaveBeenCalled();
+    });
+  },
 };

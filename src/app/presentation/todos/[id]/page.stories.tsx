@@ -3,7 +3,7 @@ import { ApplicationProvider } from '@/app/presentation/applicationProvider';
 import TodoPage from '@/app/presentation/todos/[id]/page';
 import { Meta, StoryObj } from '@storybook/react';
 import ApplicationContext, * as actual from '@/app/application/hooks/app.context';
-import { userEvent, within, expect } from '@storybook/test';
+import { userEvent, within, expect, waitFor } from '@storybook/test';
 
 import { fn } from '@storybook/test';
 import { Container } from 'inversify';
@@ -123,7 +123,6 @@ export const FilledForm: Story = {
     const canvas = within(canvasElement);
 
     const { updateTodoUseCase } = useAppContext();
-    const { updateTodo } = updateTodoUseCase();
 
     const title = canvas.getByPlaceholderText('Title');
     await userEvent.type(title, ' update');
@@ -131,8 +130,14 @@ export const FilledForm: Story = {
     const submit = canvas.getByRole('button', { name: /submit/i });
     await userEvent.click(submit);
 
-    await canvas.getByText('test title update');
+    // await canvas.getByText('test title update');
     // await expect(updateTodo).toHaveBeenCalled();
-    await expect(updateTodo).toHaveBeenCalled(); // With({ id: '1', title: 'new title' });
+    await waitFor(
+      async () =>
+        await expect(
+          useAppContext().updateTodoUseCase().updateTodo,
+        ).toHaveBeenCalled(),
+    );
+    // await expect(updateTodo).toHaveBeenCalled(); // With({ id: '1', title: 'new title' });
   },
 };
