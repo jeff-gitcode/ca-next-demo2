@@ -6,6 +6,7 @@ import ApplicationContext, * as actual from '@/app/application/hooks/app.context
 
 import { userEvent, within, fn, expect, waitFor } from '@storybook/test';
 import { Container } from 'inversify';
+import { testData } from '../test.data';
 
 export const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
@@ -36,40 +37,7 @@ type Story = StoryObj<typeof meta>;
 const mockGoBack = fn();
 export const Base: Story = {
   beforeEach: () => {
-    // jest.clearAllMocks();
-    useAppContext.mockReturnValue({
-      container: ApplicationContainer,
-      todoListUseCase: () => ({
-        data: [
-          {
-            id: '1',
-            title: 'test title',
-          },
-        ],
-        isLoading: false,
-        error: '',
-      }),
-      todoUseCase: (id: string) => ({
-        data: { id: id, title: 'test title' },
-        isLoading: false,
-        error: '',
-      }),
-      updateTodoUseCase: () => ({
-        updateData: null,
-        updateTodo: fn(),
-        isUpdating: false,
-      }),
-      createTodoUseCase: () => ({
-        createData: null,
-        createTodo: () => mockGoBack,
-        isCreating: false,
-      }),
-      deleteTodoUseCase: () => ({
-        deleteData: null,
-        deleteTodo: fn(),
-        isDeleting: false,
-      }),
-    });
+    useAppContext.mockReturnValue(testData);
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

@@ -8,6 +8,7 @@ import { userEvent, within, expect, waitFor } from '@storybook/test';
 import { fn } from '@storybook/test';
 import { Container } from 'inversify';
 import exp from 'constants';
+import { testData } from '../test.data';
 
 export const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
@@ -81,39 +82,7 @@ export const Base: Story = {
 
 export const FilledForm: Story = {
   beforeEach: () => {
-    useAppContext.mockReturnValue({
-      container: ApplicationContainer,
-      todoListUseCase: () => ({
-        data: [
-          {
-            id: '1',
-            title: 'test title',
-          },
-        ],
-        isLoading: false,
-        error: '',
-      }),
-      todoUseCase: (id: string) => ({
-        data: { id: id, title: 'test title' },
-        isLoading: false,
-        error: '',
-      }),
-      updateTodoUseCase: () => ({
-        updateData: null,
-        updateTodo: fn(),
-        isUpdating: false,
-      }),
-      createTodoUseCase: () => ({
-        createData: null,
-        createTodo: fn(),
-        isCreating: false,
-      }),
-      deleteTodoUseCase: () => ({
-        deleteData: null,
-        deleteTodo: fn(),
-        isDeleting: false,
-      }),
-    });
+    useAppContext.mockReturnValue(testData);
   },
   args: {
     params: { id: '1' },
