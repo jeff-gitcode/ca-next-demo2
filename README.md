@@ -15,7 +15,7 @@
 - [x] Lint-Staged
 - [x] Commitlint
 - [x] storybook
--
+- [x] playwright
 
 ```javascript
 
@@ -144,6 +144,10 @@ $ yarn add -D @commitlint/{cli,config-conventional} @commitlint/types convention
 # storybook
 $ npx storybook@latest init
 $ yarn add -D  @storybook/addon-console
+
+# playwright
+$ yarn add -D @playwright/test@latest
+$ yarn playwright --version
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
