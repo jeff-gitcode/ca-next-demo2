@@ -8,7 +8,7 @@ import { userEvent, within, fn, expect, waitFor } from '@storybook/test';
 import { Container } from 'inversify';
 import { testData } from '../test.data';
 
-export const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
+const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
 const meta = {
   title: 'NewTodo',

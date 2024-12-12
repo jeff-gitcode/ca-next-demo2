@@ -6,41 +6,9 @@ import ApplicationContext, * as actual from '@/app/application/hooks/app.context
 
 import { fn } from '@storybook/test';
 import { Container } from 'inversify';
+import { testData } from './todos/test.data';
 
-export const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
-useAppContext.mockReturnValue({
-  container: ApplicationContainer,
-  todoListUseCase: () => ({
-    data: [
-      {
-        id: '1',
-        title: 'test title',
-      },
-    ],
-    isLoading: false,
-    error: '',
-  }),
-  todoUseCase: (id: string) => ({
-    data: { id: id, title: 'test title' },
-    isLoading: false,
-    error: '',
-  }),
-  updateTodoUseCase: () => ({
-    updateData: null,
-    updateTodo: fn(),
-    isUpdating: false,
-  }),
-  createTodoUseCase: () => ({
-    createData: null,
-    createTodo: fn(),
-    isCreating: false,
-  }),
-  deleteTodoUseCase: () => ({
-    deleteData: null,
-    deleteTodo: fn(),
-    isDeleting: false,
-  }),
-});
+const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
 const meta = {
   title: 'Nav',
@@ -99,30 +67,7 @@ type Story = StoryObj<typeof meta>;
 export const Base: Story = {
   beforeEach: () => {
     // jest.clearAllMocks();
-    // useAppContext.mockReturnValue({
-    //   todoListUseCase: () => ({
-    //     data: [
-    //       {
-    //         id: '1',
-    //         title: 'test title',
-    //         description: 'test description',
-    //         status: 'test status',
-    //       },
-    //     ],
-    //     isLoading: false,
-    //     error: '',
-    //   }),
-    //   todoUseCase: () => ({
-    //     data: { id: '1', title: 'test title' },
-    //     isLoading: false,
-    //     error: '',
-    //   }),
-    //   updateTodoUseCase: () => ({
-    //     updateData: null,
-    //     updateTodo: fn(),
-    //     isUpdating: false,
-    //   }),
-    // });
+    useAppContext.mockReturnValue(testData);
   },
   // args: {
   //   params: { id: '1' },

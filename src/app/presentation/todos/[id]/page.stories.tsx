@@ -10,7 +10,7 @@ import { Container } from 'inversify';
 import exp from 'constants';
 import { testData } from '../test.data';
 
-export const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
+const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
 const meta = {
   title: 'TodoPage',
