@@ -1,6 +1,10 @@
 import { ApplicationContainer } from '@/app/di';
 import { fn } from '@storybook/test';
 
+export const mockDeleteTodo = fn();
+export const mockCreateTodo = fn();
+export const mockUpdateTodo = fn();
+
 export const testData = {
   container: ApplicationContainer,
   todoListUseCase: () => ({
@@ -34,7 +38,10 @@ export const testData = {
   }),
   deleteTodoUseCase: () => ({
     deleteData: null,
-    deleteTodo: fn(),
+    deleteTodo: () => {
+      console.log('deleteTodo');
+      mockDeleteTodo();
+    },
     isDeleting: false,
   }),
 };

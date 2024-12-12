@@ -42,10 +42,12 @@ const TodoListPage = () => {
         </Link>
       </header>
       <main className="text-large p-4">
-        {data?.map((todo: Todo) => (
+        {data?.map((todo: Todo, index: number) => (
           <div key={todo.id} className="my-2 rounded-md border-b p-4 leading-8">
-            <div className="font-bold">{todo.title}</div>
-            <div className="flex justify-end gap-3">
+            <div className="font-bold" id={index.toString()}>
+              {todo.title}
+            </div>
+            <div className="flex justify-end gap-3" id={index.toString()}>
               <Link
                 className="rounded-md bg-slate-200 px-4 py-2 text-sm font-bold uppercase text-black"
                 href={`/presentation/todos/${todo.id}`}
@@ -53,6 +55,7 @@ const TodoListPage = () => {
                 Edit
               </Link>
               <button
+                id={index.toString()}
                 className="rounded-md bg-red-500 px-4 py-2 text-sm font-bold uppercase"
                 onClick={() => onDelete(todo.id)}
               >

@@ -4,9 +4,9 @@ import TodoListPage from '@/app/presentation/todos/page';
 import { Meta, StoryObj } from '@storybook/react';
 import ApplicationContext, * as actual from '@/app/application/hooks/app.context';
 
-import { fn } from '@storybook/test';
 import { Container } from 'inversify';
-import { testData } from './test.data';
+import { mockDeleteTodo, testData } from './test.data';
+import { userEvent, within, fn, expect, waitFor } from '@storybook/test';
 
 const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
@@ -41,5 +41,63 @@ export const Base: Story = {
   beforeEach: () => {
     // jest.clearAllMocks();
     useAppContext.mockReturnValue(testData);
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const deleteButton = canvas
+      .getAllByRole('button', { name: /Delete/i })
+      .find((button) => button.id === '0');
+    await expect(deleteButton).toBeInTheDocument();
+    await deleteButton!.click();
+
+    await waitFor(async () => {
+      await expect(mockDeleteTodo).toHaveBeenCalled();
+    });
+  },
+};
+
+export const DeleteAction: Story = {
+  beforeEach: () => {
+    // jest.clearAllMocks();
+    useAppContext.mockReturnValue(testData);
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    for (let i = 0; i < 2; i++) {
+      const deleteButton = canvas
+        .getAllByRole('button', { name: /Delete/i })
+        .find((button) => button.id === i.toString());
+      await expect(deleteButton).toBeInTheDocument();
+      await deleteButton!.click();
+
+      await waitFor(async () => {
+        await expect(mockDeleteTodo).toHaveBeenCalled();
+      });
+    }
+  },
+};
+
+export const CreateAction: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
+  beforeEach: () => {
+    // jest.clearAllMocks();
+    useAppContext.mockReturnValue(testData);
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const createButtonLink = canvas.getByRole('link', { name: /Create/i });
+    await expect(createButtonLink).toBeInTheDocument();
+    console.log(createButtonLink);
+    await createButtonLink.click();
+
+    await waitFor(async () => {
+      await expect(createButtonLink.onclick).toHaveBeenCalled();
+      // expect(window.location.pathname).toBe('/todos/new');
+    });
   },
 };
