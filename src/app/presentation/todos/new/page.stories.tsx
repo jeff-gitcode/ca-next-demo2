@@ -52,3 +52,26 @@ export const Base: Story = {
     });
   },
 };
+
+export const Error: Story = {
+  beforeEach: () => {
+    useAppContext.mockReturnValue(testData);
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const title = canvas.getByPlaceholderText('Title');
+    await userEvent.clear(title);
+
+    const submit = canvas.getByRole('button', { name: /submit/i });
+    await userEvent.click(submit, { delay: 1000 });
+
+    await waitFor(async () => {
+      const errorMessage = await canvas.findByText(
+        'String must contain at least 1 character(s)',
+      );
+      await expect(errorMessage).toBeInTheDocument();
+
+      expect(await mockCreateTodo).not.toHaveBeenCalled();
+    });
+  },
+};
