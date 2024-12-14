@@ -1,10 +1,11 @@
 import { ApplicationContainer } from '@/app/di';
 import { ApplicationProvider } from '@/app/presentation/applicationProvider';
+import { userEvent, within, fn, expect, waitFor } from '@storybook/test';
+
 import Nav from '@/app/presentation/nav';
 import { Meta, StoryObj } from '@storybook/react';
 import ApplicationContext, * as actual from '@/app/application/hooks/app.context';
 
-import { fn } from '@storybook/test';
 import { Container } from 'inversify';
 import { testData } from './todos/test.data';
 
@@ -24,37 +25,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <ApplicationContext.Provider
-        value={{
-          container: ApplicationContainer,
-          todoListUseCase: () => ({
-            data: [
-              {
-                id: '1',
-                title: 'test title1',
-              },
-              {
-                id: '2',
-                title: 'test title2',
-              },
-            ],
-            isLoading: false,
-            error: '',
-          }),
-          todoUseCase: (id: string) => ({
-            data: { id: id, title: 'test title' },
-            isLoading: false,
-            error: '',
-          }),
-          createTodoUseCase: () => ({
-            createData: undefined,
-            createTodo: undefined,
-            isCreating: false,
-          }),
-          updateTodoUseCase: useAppContext().updateTodoUseCase,
-          deleteTodoUseCase: useAppContext().deleteTodoUseCase,
-        }}
-      >
+      <ApplicationContext.Provider value={useAppContext()}>
         {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
         <Story />
       </ApplicationContext.Provider>
@@ -70,7 +41,10 @@ export const Base: Story = {
     // jest.clearAllMocks();
     useAppContext.mockReturnValue(testData);
   },
-  // args: {
-  //   params: { id: '1' },
-  // },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const todos = canvas.getAllByRole('link', { name: /todos/i });
+    await expect(todos).toHaveLength(1);
+    await todos[0].click();
+  },
 };

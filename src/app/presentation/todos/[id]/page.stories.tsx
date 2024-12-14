@@ -8,7 +8,7 @@ import { userEvent, within, expect, waitFor } from '@storybook/test';
 import { fn } from '@storybook/test';
 import { Container } from 'inversify';
 import exp from 'constants';
-import { testData } from '../test.data';
+import { mockUpdateTodo, testData } from '../test.data';
 
 const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
@@ -70,12 +70,6 @@ export const FilledForm: Story = {
 
     // await canvas.getByText('test title update');
     // await expect(updateTodo).toHaveBeenCalled();
-    await waitFor(
-      async () =>
-        await expect(
-          useAppContext().updateTodoUseCase().updateTodo,
-        ).toHaveBeenCalled(),
-    );
-    // await expect(updateTodo).toHaveBeenCalled(); // With({ id: '1', title: 'new title' });
+    await waitFor(async () => await expect(mockUpdateTodo).toHaveBeenCalled());
   },
 };

@@ -28,12 +28,18 @@ export const testData = {
   }),
   updateTodoUseCase: () => ({
     updateData: null,
-    updateTodo: fn(),
+    updateTodo: () => {
+      console.log('updateTodo');
+      mockUpdateTodo();
+    },
     isUpdating: false,
   }),
   createTodoUseCase: () => ({
     createData: null,
-    createTodo: fn(),
+    createTodo: () => {
+      console.log('createTodo');
+      mockCreateTodo();
+    },
     isCreating: false,
   }),
   deleteTodoUseCase: () => ({

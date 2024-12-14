@@ -6,7 +6,7 @@ import ApplicationContext, * as actual from '@/app/application/hooks/app.context
 
 import { userEvent, within, fn, expect, waitFor } from '@storybook/test';
 import { Container } from 'inversify';
-import { testData } from '../test.data';
+import { mockCreateTodo, testData } from '../test.data';
 
 const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
@@ -35,8 +35,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const mockGoBack = fn();
-
 export const Base: Story = {
   beforeEach: () => {
     useAppContext.mockReturnValue(testData);
@@ -50,7 +48,7 @@ export const Base: Story = {
     await userEvent.click(submit, { delay: 1000 });
 
     await waitFor(async () => {
-      expect(await mockGoBack).toHaveBeenCalled();
+      expect(await mockCreateTodo).toHaveBeenCalled();
     });
   },
 };
