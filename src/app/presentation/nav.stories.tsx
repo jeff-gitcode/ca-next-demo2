@@ -13,6 +13,7 @@ const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 const meta = {
   title: 'Nav',
   component: Nav,
+  tags: ['pages', 'todos', 'autodocs'],
   parameters: {
     controls: { expanded: true },
     nextjs: {

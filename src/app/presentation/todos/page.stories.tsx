@@ -12,6 +12,7 @@ const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
 const meta = {
   title: 'TodoListPage',
+  tags: ['pages', 'todos', 'autodocs'],
   component: TodoListPage,
   parameters: {
     controls: { expanded: true },

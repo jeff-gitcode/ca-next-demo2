@@ -13,6 +13,7 @@ const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 const meta = {
   title: 'NewTodo',
   component: NewTodo,
+  tags: ['pages', 'todos', 'autodocs'],
   parameters: {
     controls: { expanded: true },
     nextjs: {
@@ -35,6 +36,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockGoBack = fn();
+
 export const Base: Story = {
   beforeEach: () => {
     useAppContext.mockReturnValue(testData);

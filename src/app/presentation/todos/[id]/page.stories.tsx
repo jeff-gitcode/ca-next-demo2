@@ -13,8 +13,9 @@ import { testData } from '../test.data';
 const useAppContext = fn(actual.useAppContext).mockName('useAppContext');
 
 const meta = {
-  title: 'TodoPage',
+  title: 'UpdateTodoPage',
   component: TodoPage,
+  tags: ['pages', 'todos', 'autodocs'],
   parameters: {
     controls: { expanded: true },
     nextjs: {
@@ -41,39 +42,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Base: Story = {
   beforeEach: () => {
-    useAppContext.mockReturnValue({
-      container: ApplicationContainer,
-      todoListUseCase: () => ({
-        data: [
-          {
-            id: '1',
-            title: 'test title',
-          },
-        ],
-        isLoading: false,
-        error: '',
-      }),
-      todoUseCase: (id: string) => ({
-        data: { id: id, title: 'test title1' },
-        isLoading: false,
-        error: '',
-      }),
-      updateTodoUseCase: () => ({
-        updateData: null,
-        updateTodo: fn(),
-        isUpdating: false,
-      }),
-      createTodoUseCase: () => ({
-        createData: null,
-        createTodo: fn(),
-        isCreating: false,
-      }),
-      deleteTodoUseCase: () => ({
-        deleteData: null,
-        deleteTodo: fn(),
-        isDeleting: false,
-      }),
-    });
+    useAppContext.mockReturnValue(testData);
   },
   args: {
     params: { id: '1' },
