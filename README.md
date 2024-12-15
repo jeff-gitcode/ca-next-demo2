@@ -148,8 +148,9 @@ $ yarn add -D  @storybook/addon-console
 #vitest
 $ yarn add -D vitest
 
-# playwright
-$ yarn add -D @playwright/test@latest
+# playwright （need write-access to users/abc/appData/local/ms-playwright folder in windows）
+$ yarn create playwright
+# $ yarn add -D @playwright/test@latest
 $ yarn playwright --version
 ```
 
