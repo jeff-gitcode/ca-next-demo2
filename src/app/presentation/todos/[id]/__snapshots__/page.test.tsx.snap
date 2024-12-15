@@ -6,13 +6,13 @@ exports[`TodoPage should render 1`] = `
     class="flex flex-col items-center space-y-2"
   >
     <input
-      class="text-black flex rounded-lg px-1 py-1 bg-grey-100 peer block"
+      class="bg-grey-100 peer block flex rounded-lg px-1 py-1 text-black"
       disabled=""
       name="id"
       placeholder="ID"
     />
     <input
-      class="text-black flex rounded-lg px-1 py-1"
+      class="flex rounded-lg px-1 py-1 text-black"
       name="title"
       placeholder="Title"
     />

@@ -145,6 +145,9 @@ $ yarn add -D @commitlint/{cli,config-conventional} @commitlint/types convention
 $ npx storybook@latest init
 $ yarn add -D  @storybook/addon-console
 
+#vitest
+$ yarn add -D vitest
+
 # playwright
 $ yarn add -D @playwright/test@latest
 $ yarn playwright --version

@@ -68,6 +68,8 @@ export class TodoService implements ITodoService {
 
   async updateTodo(id: string, req: Request): Promise<Todo> {
     try {
+      const payload = await req.json();
+      console.log(payload);
       const response = await fetch(
         `${process.env.PATH_API_URL_BACKEND}/api/collections/todo/records/${id}`,
         {
@@ -75,7 +77,7 @@ export class TodoService implements ITodoService {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(await req.json()),
+          body: JSON.stringify(payload),
         },
       );
       const data = await response.json();

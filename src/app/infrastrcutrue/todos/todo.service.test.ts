@@ -4,6 +4,7 @@ import fetchMock from 'jest-fetch-mock';
 
 import { TodoService } from './todo.service';
 import { Todo } from '@/app/domain/todo';
+import { id } from 'inversify';
 
 fetchMock.enableMocks();
 
@@ -55,20 +56,28 @@ describe('TodoService', () => {
 
   test('when updateTodo should return', async () => {
     // Act
-    const request: RequestInit = {
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'PATCH',
-      body: JSON.stringify({
+    // const request: RequestInit = {
+    //   cache: 'no-cache',
+    //   credentials: 'same-origin',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   method: 'PATCH',
+    //   body: JSON.stringify({
+    //     title: 'title',
+    //   }),
+    // };
+
+    const request = {
+      requestBody: {
+        id: '1',
         title: 'title',
-      }),
-    };
+      },
+      queryParams: { id: '1' },
+    } as any;
 
     fetchMock.mockResponseOnce(JSON.stringify(mockTodo));
-    const result = await todoService.updateTodo('1', request as Request);
+    const result = await todoService.updateTodo('1', request);
 
     // Assert
     expect(result).toEqual(mockTodo);
