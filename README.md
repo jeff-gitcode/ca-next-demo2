@@ -152,6 +152,10 @@ $ yarn add -D vitest
 $ yarn create playwright
 # $ yarn add -D @playwright/test@latest
 $ yarn playwright --version
+
+$ yarn playwright test
+#or
+$ yarn playwright test --ui
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
