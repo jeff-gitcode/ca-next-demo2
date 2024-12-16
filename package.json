@@ -18,7 +18,13 @@
     "lint-staged": "lint-staged",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "type-check": "tsc -b"
+    "type-check": "tsc -b",
+    "playwright": "npx playwright test",
+    "playwright:report": "npx playwright show-report",
+    "playwright:watch": "playwright test --watch",
+    "playwright:debug": "playwright test --debug",
+    "playwright:inspect": "playwright test --inspect",
+    "playwright:ui": "npx playwright test --ui"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",

@@ -1,5 +1,9 @@
 # CA Next Demo2
 
+## Video
+
+![alt text](./doc/next2-demo.gif)
+
 ## Tech Stack
 
 - [x] nextjs
